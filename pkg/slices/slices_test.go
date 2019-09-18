@@ -3,17 +3,18 @@ package slices
 import (
 	"bytes"
 	"encoding/base64"
-	"fmt"
 	"image"
 	"image/png"
 	"testing"
 )
 
 func Test_pic(t *testing.T) {
-	show(Pic)
+	// just print the image in base64 encoding
+	// the base64 can then be converted in an image using https://base64.guru/converter/decode/file
+	show(t, Pic)
 }
 
-func show(f func(int, int) [][]uint8) {
+func show(t *testing.T, f func(int, int) [][]uint8) {
 	const (
 		dx = 256
 		dy = 256
@@ -33,12 +34,12 @@ func show(f func(int, int) [][]uint8) {
 			m.Pix[i+3] = 255
 		}
 	}
-	showImage(m)
+	showImage(t, m)
 }
 
-func showImage(m image.Image) {
+func showImage(t *testing.T, m image.Image) {
 	var buf bytes.Buffer
 	png.Encode(&buf, m)
 	enc := base64.StdEncoding.EncodeToString(buf.Bytes())
-	fmt.Println("IMAGE:" + enc)
+	t.Log("PNG image (base64): " + enc)
 }
