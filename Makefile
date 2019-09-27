@@ -11,5 +11,5 @@ test:
 
 .PHONY: clean
 clean:
-	go clean
-	go clean -testcache
+	go clean ./pkg/... ./cmd/...
+	go clean -testcache ./pkg/... ./cmd/...
